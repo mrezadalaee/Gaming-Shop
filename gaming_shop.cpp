@@ -1,14 +1,16 @@
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <windows.h>
 
-struct Game
+struct Products
 {
     std::string name;
     int price;
     int mojody;
+    std::string category;
 };
-std::vector<Game> games;
+std::vector<Products> games;
 bool isNumber(const std::string s);
 
 void add()
@@ -21,7 +23,7 @@ void add()
         std::cout << "You can not add game, mojody takmil";
         return;
     }
-    Game game;
+    Products game;
     std::cout << "name: ";
     std::cin >> game.name;
     std::cout << "mojody: ";
@@ -139,44 +141,104 @@ void calculate()
 }
 void menu()
 {
-    int choice;
+    int choice2;
 
-    do
+    while (choice2 != 1 && choice2 != 2)
     {
-        std::cout << "\n------ menu------\n";
-        std::cout << "1. Add game\n";
-        std::cout << "2. Delete Game\n";
-        std::cout << "3. Search Game\n";
-        std::cout << "4. Show All Games \n";
-        std::cout << "5. Calculate price \n";
-        std::cout << "6. Exit\n";
-        std::cout << " Your Choice?: ";
-        std::cin >> choice;
-
-        switch (choice)
+        system("cls");
+        std::cout << "---- Auth ---- \n";
+        std::cout << "1. Admin \n";
+        std::cout << "2. User \n";
+        std::cin >> choice2;
+        if (choice2 != 1 && choice2 != 2)
         {
-        case 1:
-            add();
-            break;
-        case 2:
-            deleteGame();
-            break;
-        case 3:
-            search();
-            break;
-        case 4:
-            show();
-            break;
-        case 5:
-            calculate();
-            break;
-        case 6:
-            std::cout << "\n Exit\n";
-            break;
-        default:
-            std::cout << "\n Invalid\n";
+            system("cls");
+            std::cout << "1 OR 2";
+            Sleep(1500);
+            system("cls");
+            std::cout << "Login page.\n";
+            Sleep(1500);
+            system("cls");
+            std::cout << "Login page..\n";
+            Sleep(1500);
+            system("cls");
+            std::cout << "Login page...\n";
+            Sleep(1500);
         }
-    } while (choice != 6);
+        else if (choice2 == 2)
+        {
+            system("cls");
+            std::cout << "going to menu.";
+            Sleep(1500);
+            system("cls");
+            std::cout << "going to menu..";
+            Sleep(1500);
+            system("cls");
+            std::cout << "going to menu...";
+            Sleep(1500);
+        }
+        else
+        {
+            system("cls");
+            std::cout << "Auth page.";
+            Sleep(1500);
+            system("cls");
+            std::cout << "Auth page..";
+            Sleep(1500);
+            system("cls");
+            std::cout << "Auth page...";
+            Sleep(1500);
+        }
+    }
+
+    if (choice2 == 2)
+    {
+
+        int choice;
+        do
+        {
+            system("cls");
+            std::cout << "\n------ menu------\n";
+            std::cout << "1. Add game\n";
+            std::cout << "2. Delete Game\n";
+            std::cout << "3. Search Game\n";
+            std::cout << "4. Show All Games \n";
+            std::cout << "5. Calculate price \n";
+            std::cout << "6. Exit\n";
+            std::cout << "Your Choice?: ";
+            std::cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                add();
+                break;
+            case 2:
+                deleteGame();
+                break;
+            case 3:
+                search();
+                break;
+            case 4:
+                show();
+                break;
+            case 5:
+                calculate();
+                break;
+            case 6:
+                std::cout << "\n Exit\n";
+                break;
+            default:
+                std::cout << "\n Invalid\n";
+            }
+
+        } while (choice != 6);
+    }
+    else if (choice2 ==1);
+    {
+        
+    }
+    
 }
 
 int main()

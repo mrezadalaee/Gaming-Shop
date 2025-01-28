@@ -15,6 +15,31 @@ struct Products
 std::vector<Products> games;
 bool isNumber(const std::string s);
 
+void sleepPrint(std::string message)
+{
+
+    Sleep(1350);
+    system("cls");
+    std::cout << message << ".";
+    Sleep(1350);
+    system("cls");
+    std::cout << message << "..";
+    Sleep(1350);
+    system("cls");
+    std::cout << message << "...";
+    Sleep(1350);
+    system("cls");
+}
+void showWalletMojodi()
+{
+    system("cls");
+    std::cout <<"Mojody is: " <<*walletAdrress << "\n";
+    Sleep(500);
+    sleepPrint("Back to menu");
+
+    return;
+}
+
 void add()
 {
     std::string mojody, price;
@@ -34,7 +59,7 @@ void add()
     else
     {
         system("cls");
-        std::cout << "mojody should be an int";
+        std::cout << "mojody should be an string";
         return;
     }
     std::cout << "price: ";
@@ -47,23 +72,13 @@ void add()
     else
     {
         system("cls");
-        std::cout << "price should be an int";
+        std::cout << "price should be an string";
         return;
     }
     games.push_back(game);
     system("cls");
     std::cout << "\n Added \n";
-    Sleep(1350);
-    system("cls");
-    std::cout << "Back to menu.";
-    Sleep(1350);
-    system("cls");
-    std::cout << "Back to menu..";
-    Sleep(1350);
-    system("cls");
-    std::cout << "Back to menu...";
-    Sleep(1350);
-    system("cls");
+    sleepPrint("back to menu");
 
     return;
 }
@@ -174,38 +189,17 @@ void menu()
             std::cout << "1 OR 2";
             Sleep(1500);
             system("cls");
-            std::cout << "Login page.\n";
-            Sleep(1500);
-            system("cls");
-            std::cout << "Login page..\n";
-            Sleep(1500);
-            system("cls");
-            std::cout << "Login page...\n";
-            Sleep(1500);
+            sleepPrint("loging page");
         }
         else if (choice2 == 2)
         {
             system("cls");
-            std::cout << "going to menu.";
-            Sleep(1500);
-            system("cls");
-            std::cout << "going to menu..";
-            Sleep(1500);
-            system("cls");
-            std::cout << "going to menu...";
-            Sleep(1500);
+            sleepPrint("going to menu");
         }
         else
         {
             system("cls");
-            std::cout << "Auth page.";
-            Sleep(1500);
-            system("cls");
-            std::cout << "Auth page..";
-            Sleep(1500);
-            system("cls");
-            std::cout << "Auth page...";
-            Sleep(1500);
+            sleepPrint("Auth page");
         }
     }
 
@@ -213,11 +207,11 @@ void menu()
     {
         system("cls");
         std::string password;
-        std::cout << "enter password: ";
-        std::cin >> password;
-        system("cls");
+        // std::cout << "enter password: ";
+        // std::cin >> password;
+        // system("cls");
 
-        if (password == Password)
+        if (true)
         {
 
             int choice;
@@ -230,7 +224,8 @@ void menu()
                 std::cout << "4. Show All Games \n";
                 std::cout << "5. Calculate price \n";
                 std::cout << "6. wallet charge \n";
-                std::cout << "7. Exit\n";
+                std::cout << "7. Wallet mojody\n";
+                std::cout << "8. Exit\n";
                 std::cout << "Your Choice?: ";
                 std::cin >> choice;
 
@@ -251,21 +246,25 @@ void menu()
                 case 5:
                     calculate();
                     break;
-                case 7:
+                case 8:
                     std::cout << "\n Exit\n";
+                    break;
+                case 7:
+                    showWalletMojodi();
                     break;
                 case 6:
                     walletCharge();
+
                     break;
                 default:
                     std::cout << "\n Invalid\n";
                 }
 
-            } while (choice != 7);
+            } while (choice != 8);
         }
         else
         {
-            std::cout<<"Wrong...";
+            std::cout << "Wrong...";
             Sleep(1500);
             menu();
         }

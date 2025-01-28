@@ -2,7 +2,9 @@
 #include <vector>
 #include <stdlib.h>
 #include <windows.h>
-
+long int wallet = 0;
+long int *walletAdrress = &wallet;
+const std::string Password = "admin1admin";
 struct Products
 {
     std::string name;
@@ -16,16 +18,12 @@ bool isNumber(const std::string s);
 void add()
 {
     std::string mojody, price;
-    if (games.size() == 10)
-    {
-        system("cls");
-
-        std::cout << "You can not add game, mojody takmil";
-        return;
-    }
+    system("cls");
     Products game;
     std::cout << "name: ";
     std::cin >> game.name;
+    std::cout << "category ";
+    std::cin >> game.category;
     std::cout << "mojody: ";
     std::cin >> mojody;
     if (isNumber(mojody))
@@ -55,9 +53,29 @@ void add()
     games.push_back(game);
     system("cls");
     std::cout << "\n Added \n";
+    Sleep(1350);
+    system("cls");
+    std::cout << "Back to menu.";
+    Sleep(1350);
+    system("cls");
+    std::cout << "Back to menu..";
+    Sleep(1350);
+    system("cls");
+    std::cout << "Back to menu...";
+    Sleep(1350);
+    system("cls");
+
     return;
 }
+void walletCharge()
+{
+    std::cout << "Cheghadr mi khahid charge konid?\n";
+    long int value;
+    std::cin >> value;
+    *walletAdrress += value;
 
+    return;
+}
 void deleteGame()
 {
     if (games.empty())
@@ -191,54 +209,70 @@ void menu()
         }
     }
 
-    if (choice2 == 2)
+    if (choice2 == 1)
     {
+        system("cls");
+        std::string password;
+        std::cout << "enter password: ";
+        std::cin >> password;
+        system("cls");
 
-        int choice;
-        do
+        if (password == Password)
         {
-            system("cls");
-            std::cout << "\n------ menu------\n";
-            std::cout << "1. Add game\n";
-            std::cout << "2. Delete Game\n";
-            std::cout << "3. Search Game\n";
-            std::cout << "4. Show All Games \n";
-            std::cout << "5. Calculate price \n";
-            std::cout << "6. Exit\n";
-            std::cout << "Your Choice?: ";
-            std::cin >> choice;
 
-            switch (choice)
+            int choice;
+            do
             {
-            case 1:
-                add();
-                break;
-            case 2:
-                deleteGame();
-                break;
-            case 3:
-                search();
-                break;
-            case 4:
-                show();
-                break;
-            case 5:
-                calculate();
-                break;
-            case 6:
-                std::cout << "\n Exit\n";
-                break;
-            default:
-                std::cout << "\n Invalid\n";
-            }
+                std::cout << "\n------ menu------\n";
+                std::cout << "1. Add game\n";
+                std::cout << "2. Delete Game\n";
+                std::cout << "3. Search Game\n";
+                std::cout << "4. Show All Games \n";
+                std::cout << "5. Calculate price \n";
+                std::cout << "6. wallet charge \n";
+                std::cout << "7. Exit\n";
+                std::cout << "Your Choice?: ";
+                std::cin >> choice;
 
-        } while (choice != 6);
+                switch (choice)
+                {
+                case 1:
+                    add();
+                    break;
+                case 2:
+                    deleteGame();
+                    break;
+                case 3:
+                    search();
+                    break;
+                case 4:
+                    show();
+                    break;
+                case 5:
+                    calculate();
+                    break;
+                case 7:
+                    std::cout << "\n Exit\n";
+                    break;
+                case 6:
+                    walletCharge();
+                    break;
+                default:
+                    std::cout << "\n Invalid\n";
+                }
+
+            } while (choice != 7);
+        }
+        else
+        {
+            std::cout<<"Wrong...";
+            Sleep(1500);
+            menu();
+        }
     }
-    else if (choice2 ==1);
+    else if (choice2 == 1)
     {
-        
     }
-    
 }
 
 int main()

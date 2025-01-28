@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <windows.h>
+#include <conio.h>
 long int wallet = 0;
 long int *walletAdrress = &wallet;
 const std::string Password = "admin1admin";
@@ -18,22 +19,22 @@ bool isNumber(const std::string s);
 void sleepPrint(std::string message)
 {
 
-    Sleep(1350);
+    Sleep(1000);
     system("cls");
     std::cout << message << ".";
-    Sleep(1350);
+    Sleep(1000);
     system("cls");
     std::cout << message << "..";
-    Sleep(1350);
+    Sleep(1000);
     system("cls");
     std::cout << message << "...";
-    Sleep(1350);
+    Sleep(1000);
     system("cls");
 }
 void showWalletMojodi()
 {
     system("cls");
-    std::cout <<"Mojody is: " <<*walletAdrress << "\n";
+    std::cout << "Mojody is: " << *walletAdrress << "\n";
     Sleep(500);
     sleepPrint("Back to menu");
 
@@ -47,7 +48,7 @@ void add()
     Products game;
     std::cout << "name: ";
     std::cin >> game.name;
-    std::cout << "category ";
+    std::cout << "category: ";
     std::cin >> game.category;
     std::cout << "mojody: ";
     std::cin >> mojody;
@@ -155,7 +156,17 @@ void show()
         std::cout << games[i].name << std::endl;
         std::cout << games[i].price << std::endl;
         std::cout << games[i].mojody << std::endl;
+        std::cout << "----------------------------\n";
     }
+    std::cout << "prees spase to go to menu\n";
+    char chert = getch();
+    while (chert != ' ')
+    {
+        chert = getch();
+    }
+
+    system("cls");
+    sleepPrint("Back to menu");
     return;
 }
 void calculate()
@@ -164,7 +175,7 @@ void calculate()
     long double sum = 0;
     for (int i = 0; i < size; i++)
     {
-        sum += games[i].price;
+        sum += (games[i].price * games[i].mojody);
     }
     system("cls");
     std::cout << std::endl
@@ -218,10 +229,10 @@ void menu()
             do
             {
                 std::cout << "\n------ menu------\n";
-                std::cout << "1. Add game\n";
-                std::cout << "2. Delete Game\n";
-                std::cout << "3. Search Game\n";
-                std::cout << "4. Show All Games \n";
+                std::cout << "1. Add Product\n";
+                std::cout << "2. Delete Product\n";
+                std::cout << "3. Search Product\n";
+                std::cout << "4. Show All Products \n";
                 std::cout << "5. Calculate price \n";
                 std::cout << "6. wallet charge \n";
                 std::cout << "7. Wallet mojody\n";
@@ -271,6 +282,9 @@ void menu()
     }
     else if (choice2 == 1)
     {
+        //search
+        //sabad
+
     }
 }
 

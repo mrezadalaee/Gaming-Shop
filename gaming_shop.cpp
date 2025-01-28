@@ -13,7 +13,11 @@ struct Products
     int mojody;
     std::string category;
 };
-std::vector<Products> games;
+struct ShopingCart {
+    std::string productName;
+
+};
+std::vector<Products> products;
 bool isNumber(const std::string s);
 
 void sleepPrint(std::string message)
@@ -76,7 +80,7 @@ void add()
         std::cout << "price should be an string";
         return;
     }
-    games.push_back(game);
+    products.push_back(game);
     system("cls");
     std::cout << "\n Added \n";
     sleepPrint("back to menu");
@@ -94,7 +98,7 @@ void walletCharge()
 }
 void deleteGame()
 {
-    if (games.empty())
+    if (products.empty())
     {
         system("cls");
         std::cout << "\n not found 404\n";
@@ -104,11 +108,11 @@ void deleteGame()
     system("cls");
     std::cout << "name:";
     std::cin >> name;
-    for (int i = 0; i <= games.size(); i++)
+    for (int i = 0; i <= products.size(); i++)
     {
-        if (name == games[i].name)
+        if (name == products[i].name)
         {
-            games.erase(games.begin() + i);
+            products.erase(products.begin() + i);
             break;
         }
     }
@@ -123,15 +127,15 @@ void search()
     system("cls");
     std::cout << "name:";
     std::cin >> name;
-    for (int i = 0; i <= games.size(); i++)
+    for (int i = 0; i <= products.size(); i++)
     {
-        if (name == games[i].name)
+        if (name == products[i].name)
         {
             system("cls");
             std::cout << "Found!" << std::endl;
-            std::cout << games[i].name << std::endl;
-            std::cout << games[i].price << std::endl;
-            std::cout << games[i].mojody << std::endl;
+            std::cout << products[i].name << std::endl;
+            std::cout << products[i].price << std::endl;
+            std::cout << products[i].mojody << std::endl;
 
             break;
         }
@@ -141,7 +145,7 @@ void search()
 
 void show()
 {
-    int size = games.size();
+    int size = products.size();
     if (size == 0)
     {
         system("cls");
@@ -153,9 +157,9 @@ void show()
     for (int i = 0; i < size; i++)
     {
         std::cout << "Game " << i + 1 << std::endl;
-        std::cout << games[i].name << std::endl;
-        std::cout << games[i].price << std::endl;
-        std::cout << games[i].mojody << std::endl;
+        std::cout << products[i].name << std::endl;
+        std::cout << products[i].price << std::endl;
+        std::cout << products[i].mojody << std::endl;
         std::cout << "----------------------------\n";
     }
     std::cout << "prees spase to go to menu\n";
@@ -171,11 +175,11 @@ void show()
 }
 void calculate()
 {
-    int size = games.size();
+    int size = products.size();
     long double sum = 0;
     for (int i = 0; i < size; i++)
     {
-        sum += (games[i].price * games[i].mojody);
+        sum += (products[i].price * products[i].mojody);
     }
     system("cls");
     std::cout << std::endl

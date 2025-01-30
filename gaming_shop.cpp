@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
-long int wallet = 0;
-long int *walletAdrress = &wallet;
+long int shopWallet = 0;
+long int userWallet = 0;
+long int *shopWalletAdrress = &shopWallet;
+long int *userWalletAdrress = &userWallet;
 const std::string Password = "admin1admin";
 struct Products
 {
@@ -13,11 +15,19 @@ struct Products
     int mojody;
     std::string category;
 };
-struct ShopingCart {
+struct CartItem
+{
     std::string productName;
-
+    int price;
 };
+struct Cart
+{
+    long int totalPrice;
+    std::vector<CartItem> items;
+};
+std::vector<CartItem> cartItems; // cart items
 std::vector<Products> products;
+
 bool isNumber(const std::string s);
 
 void sleepPrint(std::string message)
@@ -35,10 +45,19 @@ void sleepPrint(std::string message)
     Sleep(1000);
     system("cls");
 }
-void showWalletMojodi()
+void showShopWalletMojodi()
 {
     system("cls");
-    std::cout << "Mojody is: " << *walletAdrress << "\n";
+    std::cout << "Mojody is: " << *shopWalletAdrress << "\n";
+    Sleep(500);
+    sleepPrint("Back to menu");
+
+    return;
+}
+void showUserWalletMojodi()
+{
+    system("cls");
+    std::cout << "Mojody is: " << *userWalletAdrress << "\n";
     Sleep(500);
     sleepPrint("Back to menu");
 
@@ -49,17 +68,17 @@ void add()
 {
     std::string mojody, price;
     system("cls");
-    Products game;
+    Products product;
     std::cout << "name: ";
-    std::cin >> game.name;
+    std::cin >> product.name;
     std::cout << "category: ";
-    std::cin >> game.category;
+    std::cin >> product.category;
     std::cout << "mojody: ";
     std::cin >> mojody;
     if (isNumber(mojody))
     {
 
-        game.mojody = std::stoi(mojody);
+        product.mojody = std::stoi(mojody);
     }
     else
     {
@@ -72,7 +91,7 @@ void add()
     if (isNumber(price))
     {
 
-        game.price = std::stoi(price);
+        product.price = std::stoi(price);
     }
     else
     {
@@ -80,19 +99,28 @@ void add()
         std::cout << "price should be an string";
         return;
     }
-    products.push_back(game);
+    products.push_back(product);
     system("cls");
     std::cout << "\n Added \n";
     sleepPrint("back to menu");
 
     return;
 }
-void walletCharge()
+void shopWalletCharge()
 {
     std::cout << "Cheghadr mi khahid charge konid?\n";
     long int value;
     std::cin >> value;
-    *walletAdrress += value;
+    *shopWalletAdrress += value;
+
+    return;
+}
+void userWalletCharge()
+{
+    std::cout << "Cheghadr mi khahid charge konid?\n";
+    long int value;
+    std::cin >> value;
+    *userWalletAdrress += value;
 
     return;
 }
@@ -127,6 +155,12 @@ void search()
     system("cls");
     std::cout << "name:";
     std::cin >> name;
+    if (products.empty())
+    {
+        system("cls");
+        std::cout << "\n not found 404\n";
+        return;
+    }
     for (int i = 0; i <= products.size(); i++)
     {
         if (name == products[i].name)
@@ -187,18 +221,56 @@ void calculate()
               << sum << std::endl;
     return;
 }
+void addToCart()
+{
+    CartItem item;
+    Cart cart;
+    show();
+    std::string productToAdd;
+    int tedad;
+    std::cout << "enter the product that you want to buy: ";
+
+    std::cin >> productToAdd;
+    CartItem cartitem;
+    for (int i = 0; i < products.size(); i++)
+    {
+        if (products[i].name == productToAdd)
+        {
+            item.productName = products[i].name;
+            item.price = products[i].price;
+            cartItems.push_back(item);
+            cart.items = cartItems;
+            long int sum = 0;
+            for (int j = 0; j < cartItems.size(); j++)
+            {
+                sum += cartItems[j].price;
+            }
+            cart.totalPrice = sum;
+
+            return;
+        }
+    }
+    std::cout << "Not found!";
+    return;
+}
+
+
+void seeCart(){
+
+}
 void menu()
 {
-    int choice2;
+    int AUchoice;
+    int menuChoice;
 
-    while (choice2 != 1 && choice2 != 2)
+    while (AUchoice != 1 && AUchoice != 2)
     {
         system("cls");
         std::cout << "---- Auth ---- \n";
         std::cout << "1. Admin \n";
         std::cout << "2. User \n";
-        std::cin >> choice2;
-        if (choice2 != 1 && choice2 != 2)
+        std::cin >> AUchoice;
+        if (AUchoice != 1 && AUchoice != 2)
         {
             system("cls");
             std::cout << "1 OR 2";
@@ -206,7 +278,7 @@ void menu()
             system("cls");
             sleepPrint("loging page");
         }
-        else if (choice2 == 2)
+        else if (AUchoice == 2)
         {
             system("cls");
             sleepPrint("going to menu");
@@ -218,7 +290,7 @@ void menu()
         }
     }
 
-    if (choice2 == 1)
+    if (AUchoice == 1)
     {
         system("cls");
         std::string password;
@@ -229,7 +301,6 @@ void menu()
         if (true)
         {
 
-            int choice;
             do
             {
                 std::cout << "\n------ menu------\n";
@@ -242,9 +313,9 @@ void menu()
                 std::cout << "7. Wallet mojody\n";
                 std::cout << "8. Exit\n";
                 std::cout << "Your Choice?: ";
-                std::cin >> choice;
+                std::cin >> menuChoice;
 
-                switch (choice)
+                switch (menuChoice)
                 {
                 case 1:
                     add();
@@ -265,17 +336,17 @@ void menu()
                     std::cout << "\n Exit\n";
                     break;
                 case 7:
-                    showWalletMojodi();
+                    showShopWalletMojodi();
                     break;
                 case 6:
-                    walletCharge();
+                    shopWalletCharge();
 
                     break;
                 default:
                     std::cout << "\n Invalid\n";
                 }
 
-            } while (choice != 8);
+            } while (menuChoice != 8);
         }
         else
         {
@@ -284,13 +355,57 @@ void menu()
             menu();
         }
     }
-    else if (choice2 == 1)
+    else if (AUchoice == 2)
     {
-        //search
-        //sabad
+        do
+        {
+            std::cout << "\n------ menu------\n";
+            std::cout << "1. Search Product\n";
+            std::cout << "2. wallet charge \n";
+            std::cout << "3. Wallet mojody\n";
+            std::cout << "4. Show All Products \n";
+            std::cout << "5. Add To Cart \n";
+            std::cout << "6. wallet charge \n";
+            std::cout << "7. Wallet mojody\n";
+            std::cout << "8. Exit\n";
+            std::cout << "Your Choice?: ";
+            std::cin >> menuChoice;
 
+            switch (menuChoice)
+            {
+            case 1:
+                search();
+                break;
+            case 2:
+                userWalletCharge();
+                break;
+            case 3:
+                showUserWalletMojodi();
+                break;
+            case 4:
+                show();
+                break;
+            case 5:
+                addToCart();
+                break;
+            case 8:
+                std::cout << "\n Exit\n";
+                break;
+            case 7:
+                showShopWalletMojodi();
+                break;
+            case 6:
+                shopWalletCharge();
+
+                break;
+            default:
+                std::cout << "\n Invalid\n";
+            }
+
+        } while (menuChoice != 8);
     }
 }
+
 
 int main()
 {

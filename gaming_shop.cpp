@@ -22,9 +22,10 @@ struct CartItem
 };
 struct Cart
 {
-    long int totalPrice;
+    long int totalPrice = 0;
     std::vector<CartItem> items;
 };
+Cart cart;
 std::vector<CartItem> cartItems; // cart items
 std::vector<Products> products;
 
@@ -33,7 +34,7 @@ bool isNumber(const std::string s);
 void sleepPrint(std::string message)
 {
 
-    Sleep(1000);
+    Sleep(1500);
     system("cls");
     std::cout << message << ".";
     Sleep(1000);
@@ -223,9 +224,26 @@ void calculate()
 }
 void addToCart()
 {
+    system("cls");
     CartItem item;
-    Cart cart;
-    show();
+
+    int size = products.size();
+    if (size == 0)
+    {
+        system("cls");
+        std::cout << std::endl
+                  << "There is not any game" << std::endl;
+        return;
+    }
+    system("cls");
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << "Game " << i + 1 << std::endl;
+        std::cout << products[i].name << std::endl;
+        std::cout << products[i].price << std::endl;
+        std::cout << products[i].mojody << std::endl;
+        std::cout << "----------------------------\n \n";
+    }
     std::string productToAdd;
     int tedad;
     std::cout << "enter the product that you want to buy: ";
@@ -234,7 +252,7 @@ void addToCart()
     CartItem cartitem;
     for (int i = 0; i < products.size(); i++)
     {
-        if (products[i].name == productToAdd)
+        if (products[i].name == productToAdd && products[i].mojody != 0)
         {
             item.productName = products[i].name;
             item.price = products[i].price;
@@ -249,14 +267,63 @@ void addToCart()
 
             return;
         }
+        else if (products[i].name == productToAdd && products[i].mojody == 0)
+        {
+            system("cls");
+            std::cout << "Not enogh product mojody";
+            sleepPrint("Back to menu");
+            return;
+        }
     }
     std::cout << "Not found!";
     return;
 }
 
+void seeCart()
+{
+    if (cart.totalPrice == 0)
+    {
+        std::cout << "You do not have any product in your cart";
+        return;
+    }
+    std::cout << "The products in your cart:\n";
+    for (int i = 0; i < cart.items.size(); i++)
+    {
+        std::cout << i << "." << cart.items[i].productName << std::endl;
+        std::cout << "    " << "price:" << cart.items[i].price << std::endl;
+    }
+    return;
+}
 
-void seeCart(){
+void checkout()
+{
+    if (cart.totalPrice > *userWalletAdrress)
+    {
+        std::cout << "You do not have enohg money, pleas charge your wallet.";
+        Sleep(500);
+        sleepPrint("Going to charge page");
+        userWalletCharge();
+    }
+    else
+    {
+        *userWalletAdrress -= cart.totalPrice;
+        cart.totalPrice = 0;
+        for (int i = 0; i < products.size(); i++)
+        {
+            for (int j = 0; j < cart.items.size(); j++)
+            {
+                if (products[i].name == cart.items[i].productName)
+                {
+                    products[i].mojody--;
+                }
+            }
+        }
 
+        cart.items.clear();
+        std::cout << "Finished... \n";
+        std::cout << "the post bring your baste to your home";
+        return;
+    }
 }
 void menu()
 {
@@ -334,6 +401,7 @@ void menu()
                     break;
                 case 8:
                     std::cout << "\n Exit\n";
+                    menu();
                     break;
                 case 7:
                     showShopWalletMojodi();
@@ -346,7 +414,7 @@ void menu()
                     std::cout << "\n Invalid\n";
                 }
 
-            } while (menuChoice != 8);
+            } while (menuChoice != 9);
         }
         else
         {
@@ -365,8 +433,8 @@ void menu()
             std::cout << "3. Wallet mojody\n";
             std::cout << "4. Show All Products \n";
             std::cout << "5. Add To Cart \n";
-            std::cout << "6. wallet charge \n";
-            std::cout << "7. Wallet mojody\n";
+            std::cout << "6. checkout \n";
+            std::cout << "7. See Cart\n";
             std::cout << "8. Exit\n";
             std::cout << "Your Choice?: ";
             std::cin >> menuChoice;
@@ -388,24 +456,24 @@ void menu()
             case 5:
                 addToCart();
                 break;
-            case 8:
-                std::cout << "\n Exit\n";
+            case 6:
+                checkout();
                 break;
             case 7:
-                showShopWalletMojodi();
-                break;
-            case 6:
-                shopWalletCharge();
+                seeCart();
 
+                break;
+            case 8:
+                std::cout << "\n Exit\n";
+                menu();
                 break;
             default:
                 std::cout << "\n Invalid\n";
             }
 
-        } while (menuChoice != 8);
+        } while (menuChoice != 9);
     }
 }
-
 
 int main()
 {

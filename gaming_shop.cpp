@@ -295,9 +295,9 @@ void show()
     for (int i = 0; i < size; i++)
     {
         std::cout << "Product " << i + 1 << std::endl;
-        std::cout << "Name:" << products[i].name << std::endl;
-        std::cout << "Price" << products[i].price << std::endl;
-        std::cout << "Mojody" << products[i].mojody << std::endl;
+        std::cout << "Name: " << products[i].name << std::endl;
+        std::cout << "Price: " << products[i].price << std::endl;
+        std::cout << "Mojody: " << products[i].mojody << std::endl;
         std::cout << "----------------------------\n";
     }
     std::cout << "prees spase to go to menu\n";
@@ -405,7 +405,10 @@ void addToCart()
             return;
         }
     }
-    std::cout << "1. Do you want to try? \n";
+
+    system("cls");
+    std::cout<<"Not found\n";
+    std::cout << "1. Do you want to try again? \n";
     std::cout << "2. Back to menu \n";
     char choice = getch();
     while (choice != '1' && choice != '2')
@@ -465,6 +468,7 @@ void checkout()
         {
             chert = getch();
         }
+        system("cls");
         return;
     }
     if (cart.totalPrice > *userWalletAdrress)
@@ -484,7 +488,7 @@ void checkout()
             {
                 if (products[i].name == cart.items[i].productName)
                 {
-                    products[i].mojody--;
+                    products[i].mojody -=1;
                 }
             }
         }

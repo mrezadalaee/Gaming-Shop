@@ -59,7 +59,12 @@ void showUserWalletMojodi()
 {
     system("cls");
     std::cout << "Mojody is: " << *userWalletAdrress << "\n";
-    Sleep(500);
+    std::cout << "press space to go to menu";
+    char chert = getch();
+    while (chert != ' ')
+    {
+        chert = getch();
+    }
     sleepPrint("Back to menu");
 
     return;
@@ -118,6 +123,7 @@ void add()
     }
     else if (choice == '2')
     {
+        system("cls");
         sleepPrint("back to menu");
         return;
     }
@@ -130,7 +136,7 @@ void shopWalletCharge()
     std::cin >> value;
     *shopWalletAdrress += value;
     system("cls");
-    std::cout << "Charged \n";
+    std::cout << "Charged... \n";
     Sleep(500);
     std::cout << "1. charge more? \n";
     std::cout << "2. Back to menu \n";
@@ -146,6 +152,7 @@ void shopWalletCharge()
     }
     else if (choice == '2')
     {
+        system("cls");
         sleepPrint("Back to menu");
         return;
     }
@@ -158,7 +165,7 @@ void userWalletCharge()
     std::cin >> value;
     *userWalletAdrress += value;
     system("cls");
-    std::cout << "Charged \n";
+    std::cout << "Charged... \n";
     Sleep(500);
     std::cout << "1. charge more? \n";
     std::cout << "2. Back to menu \n";
@@ -174,6 +181,7 @@ void userWalletCharge()
     }
     else if (choice == '2')
     {
+        system("cls");
         sleepPrint("Back to menu");
         return;
     }
@@ -183,7 +191,14 @@ void deleteProduct()
     if (products.empty())
     {
         system("cls");
-        std::cout << "\n not found 404\n";
+        std::cout << "\n not found, there isnt any product in shop. 404\n";
+        std::cout << "prees spase to go to menu\n";
+        char chert = getch();
+        while (chert != ' ')
+        {
+            chert = getch();
+        }
+        sleepPrint("Back to menu");
         return;
     }
     std::string name;
@@ -195,12 +210,16 @@ void deleteProduct()
         if (name == products[i].name)
         {
             products.erase(products.begin() + i);
+            system("cls");
+            std::cout << "\n Deleted\n";
+            Sleep(500);
+            sleepPrint("Back to menu");
+            return;
             break;
         }
     }
     system("cls");
-    std::cout << "\n Deleted\n";
-    Sleep(500);
+    std::cout << "Not found";
     sleepPrint("Back to menu");
     return;
 }
@@ -263,15 +282,22 @@ void show()
         system("cls");
         std::cout << std::endl
                   << "There is not any product" << std::endl;
+
+        std::cout << "press space to go to menu";
+        char chert = getch();
+        while (chert != ' ')
+        {
+            chert = getch();
+        }
         return;
     }
     system("cls");
     for (int i = 0; i < size; i++)
     {
         std::cout << "Product " << i + 1 << std::endl;
-        std::cout << products[i].name << std::endl;
-        std::cout << products[i].price << std::endl;
-        std::cout << products[i].mojody << std::endl;
+        std::cout << "Name:" << products[i].name << std::endl;
+        std::cout << "Price" << products[i].price << std::endl;
+        std::cout << "Mojody" << products[i].mojody << std::endl;
         std::cout << "----------------------------\n";
     }
     std::cout << "prees spase to go to menu\n";
@@ -318,13 +344,13 @@ void addToCart()
     for (int i = 0; i < size; i++)
     {
         std::cout << "Product " << i + 1 << std::endl;
-        std::cout << products[i].name << std::endl;
-        std::cout << products[i].price << std::endl;
-        std::cout << products[i].mojody << std::endl;
+        std::cout << "Name: " << products[i].name << std::endl;
+        std::cout << "Price: " << products[i].price << std::endl;
+        std::cout << "Mojody: " << products[i].mojody << std::endl;
         std::cout << "----------------------------\n \n";
     }
     std::string productToAdd;
-    int tedad;
+    // int tedad;
     std::cout << "enter the product that you want to buy: ";
 
     std::cin >> productToAdd;
@@ -366,6 +392,8 @@ void addToCart()
             }
             else if (choice == '2')
             {
+                system("cls");
+                sleepPrint("Back to menu");
                 return;
             }
         }
@@ -377,8 +405,24 @@ void addToCart()
             return;
         }
     }
-    std::cout << "Not found!";
-    return;
+    std::cout << "1. Do you want to try? \n";
+    std::cout << "2. Back to menu \n";
+    char choice = getch();
+    while (choice != '1' && choice != '2')
+    {
+        std::cout << "chose base on the list\n";
+        choice = getch();
+    }
+    if (choice == '1')
+    {
+        addToCart();
+    }
+    else if (choice == '2')
+    {
+        system("cls");
+        sleepPrint("Back to menu");
+        return;
+    }
 }
 
 void seeCart()
@@ -397,12 +441,14 @@ void seeCart()
         std::cout << i + 1 << "." << cart.items[i].productName << std::endl;
         std::cout << "    " << "price:" << cart.items[i].price << std::endl;
     }
-    std::cout << "press enter to go to menu";
+    std::cout << cart.totalPrice;
+    std::cout << "press space to go to menu";
     char chert = getch();
     while (chert != ' ')
     {
         chert = getch();
     }
+    system("cls");
 
     return;
 }
@@ -410,6 +456,17 @@ void seeCart()
 void checkout()
 {
     system("cls");
+    if (cart.totalPrice == 0)
+    {
+        std::cout << "You do not have any product in your cart, please shop.\n";
+        std::cout << "press space to go to menu";
+        char chert = getch();
+        while (chert != ' ')
+        {
+            chert = getch();
+        }
+        return;
+    }
     if (cart.totalPrice > *userWalletAdrress)
     {
         std::cout << "You do not have enohg money, pleas charge your wallet.";
@@ -444,17 +501,17 @@ void checkout()
 void menu()
 {
     system("cls");
-    int AUchoice;
-    int menuChoice;
+    char AUchoice;
+    char menuChoice;
 
-    while (AUchoice != 1 && AUchoice != 2)
+    while (AUchoice != '1' && AUchoice != '2')
     {
         system("cls");
-        std::cout << "---- Auth ---- \n";
+        std::cout << "---- Log In ---- \n";
         std::cout << "1. Admin \n";
         std::cout << "2. User \n";
-        std::cin >> AUchoice;
-        if (AUchoice != 1 && AUchoice != 2)
+        AUchoice = getch();
+        if (AUchoice != '1' && AUchoice != '2')
         {
             system("cls");
             std::cout << "1 OR 2";
@@ -462,7 +519,7 @@ void menu()
             system("cls");
             sleepPrint("loging page");
         }
-        else if (AUchoice == 2)
+        else if (AUchoice == '2')
         {
             system("cls");
             sleepPrint("going to menu");
@@ -474,15 +531,15 @@ void menu()
         }
     }
 
-    if (AUchoice == 1)
+    if (AUchoice == '1')
     {
         system("cls");
         std::string password;
-        // std::cout << "enter password: ";
-        // std::cin >> password;
-        // system("cls");
+        std::cout << "enter password: ";
+        std::cin >> password;
+        system("cls");
 
-        if (true)
+        if (password == Password)
         {
 
             do
@@ -495,52 +552,57 @@ void menu()
                 std::cout << "5. Calculate price \n";
                 std::cout << "6. wallet charge \n";
                 std::cout << "7. Wallet mojody\n";
-                std::cout << "8. Exit\n";
+                std::cout << "8. Log out\n";
+                std::cout << "9. Exit the program\n";
                 std::cout << "Your Choice?: ";
-                std::cin >> menuChoice;
+                menuChoice = getch();
 
                 switch (menuChoice)
                 {
-                case 1:
+                case '1':
                     add();
                     break;
-                case 2:
+                case '2':
                     deleteProduct();
                     break;
-                case 3:
+                case '3':
                     search();
                     break;
-                case 4:
+                case '4':
                     show();
                     break;
-                case 5:
+                case '5':
                     calculate();
                     break;
-                case 8:
-                    std::cout << "\n Exit\n";
+                case '8':
+                    system("cls");
+                    sleepPrint("Log out");
                     menu();
                     break;
-                case 7:
+                case '7':
                     showShopWalletMojodi();
                     break;
-                case 6:
+                case '6':
                     shopWalletCharge();
+                    break;
+                case '9':
 
                     break;
                 default:
                     std::cout << "\n Invalid\n";
                 }
 
-            } while (menuChoice != 9);
+            } while (menuChoice != '9');
         }
         else
         {
             std::cout << "Wrong...";
             Sleep(1500);
+            sleepPrint("Back to Log In page");
             menu();
         }
     }
-    else if (AUchoice == 2)
+    else if (AUchoice == '2')
     {
         system("cls");
 
@@ -554,43 +616,49 @@ void menu()
             std::cout << "5. Add To Cart \n";
             std::cout << "6. checkout \n";
             std::cout << "7. See Cart\n";
-            std::cout << "8. Exit\n";
+            std::cout << "8. Log out\n";
+            std::cout << "9. Exit the program\n";
             std::cout << "Your Choice?: ";
-            std::cin >> menuChoice;
+            menuChoice = getch();
 
             switch (menuChoice)
             {
-            case 1:
+            case '1':
                 search();
                 break;
-            case 2:
+            case '2':
                 userWalletCharge();
                 break;
-            case 3:
+            case '3':
                 showUserWalletMojodi();
                 break;
-            case 4:
+            case '4':
                 show();
                 break;
-            case 5:
+            case '5':
                 addToCart();
                 break;
-            case 6:
+            case '6':
                 checkout();
                 break;
-            case 7:
+            case '7':
                 seeCart();
 
                 break;
-            case 8:
-                std::cout << "\n Exit\n";
+            case '8':
+                system("cls");
+                sleepPrint("Log out");
                 menu();
                 break;
+            case '9':
+                break;
             default:
+                system("cls");
                 std::cout << "\n Invalid\n";
+                sleepPrint("Back to menu");
             }
 
-        } while (menuChoice != 9);
+        } while (menuChoice != '9');
     }
 }
 

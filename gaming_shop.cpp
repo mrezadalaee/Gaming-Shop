@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
 long int shopWallet = 0;
@@ -30,6 +29,7 @@ std::vector<CartItem> cartItems; // cart items
 std::vector<Products> products;
 
 bool isNumber(const std::string s);
+void menu();
 
 void sleepPrint(std::string message)
 {
@@ -67,6 +67,7 @@ void showUserWalletMojodi()
 
 void add()
 {
+
     std::string mojody, price;
     system("cls");
     Products product;
@@ -103,29 +104,81 @@ void add()
     products.push_back(product);
     system("cls");
     std::cout << "\n Added \n";
-    sleepPrint("back to menu");
-
-    return;
+    std::cout << "1. Add more \n";
+    std::cout << "2. Back to menu \n";
+    char choice = getch();
+    while (choice != '1' && choice != '2')
+    {
+        std::cout << "chose base on the list\n";
+        choice = getch();
+    }
+    if (choice == '1')
+    {
+        add();
+    }
+    else if (choice == '2')
+    {
+        sleepPrint("back to menu");
+        return;
+    }
 }
 void shopWalletCharge()
 {
+    system("cls");
     std::cout << "Cheghadr mi khahid charge konid?\n";
     long int value;
     std::cin >> value;
     *shopWalletAdrress += value;
-
-    return;
+    system("cls");
+    std::cout << "Charged \n";
+    Sleep(500);
+    std::cout << "1. charge more? \n";
+    std::cout << "2. Back to menu \n";
+    char choice = getch();
+    while (choice != '1' && choice != '2')
+    {
+        std::cout << "\n chose base on the list";
+        choice = getch();
+    }
+    if (choice == '1')
+    {
+        shopWalletCharge();
+    }
+    else if (choice == '2')
+    {
+        sleepPrint("Back to menu");
+        return;
+    }
 }
 void userWalletCharge()
 {
+    system("cls");
     std::cout << "Cheghadr mi khahid charge konid?\n";
     long int value;
     std::cin >> value;
     *userWalletAdrress += value;
-
-    return;
+    system("cls");
+    std::cout << "Charged \n";
+    Sleep(500);
+    std::cout << "1. charge more? \n";
+    std::cout << "2. Back to menu \n";
+    char choice = getch();
+    while (choice != '1' && choice != '2')
+    {
+        std::cout << "\n chose base on the list";
+        choice = getch();
+    }
+    if (choice == '1')
+    {
+        userWalletCharge();
+    }
+    else if (choice == '2')
+    {
+        sleepPrint("Back to menu");
+        return;
+    }
 }
-void deleteGame()
+void deleteProduct()
 {
     if (products.empty())
     {
@@ -147,6 +200,8 @@ void deleteGame()
     }
     system("cls");
     std::cout << "\n Deleted\n";
+    Sleep(500);
+    sleepPrint("Back to menu");
     return;
 }
 
@@ -160,6 +215,8 @@ void search()
     {
         system("cls");
         std::cout << "\n not found 404\n";
+        Sleep(1500);
+        sleepPrint("Back to menu");
         return;
     }
     for (int i = 0; i <= products.size(); i++)
@@ -167,14 +224,34 @@ void search()
         if (name == products[i].name)
         {
             system("cls");
-            std::cout << "Found!" << std::endl;
-            std::cout << products[i].name << std::endl;
-            std::cout << products[i].price << std::endl;
-            std::cout << products[i].mojody << std::endl;
-
+            std::cout << "Found! \n"
+                      << std::endl;
+            std::cout << "Name: " << products[i].name << std::endl;
+            std::cout << "Price: " << products[i].price << std::endl;
+            std::cout << "Mojody: " << products[i].mojody << std::endl;
             break;
         }
     }
+
+    std::cout << "Not found, 404 \n";
+    std::cout << "\n1. Search more\n";
+    std::cout << "2. Back to menu\n";
+    char choice = getch();
+    while (choice != '1' && choice != '2')
+    {
+        choice = getch();
+    }
+    if (choice == '1')
+    {
+        search();
+    }
+    else if (choice == '2')
+    {
+        sleepPrint("Back to menu");
+        return;
+    }
+    Sleep(1500);
+    sleepPrint("Back to menu");
     return;
 }
 
@@ -185,13 +262,13 @@ void show()
     {
         system("cls");
         std::cout << std::endl
-                  << "There is not any game" << std::endl;
+                  << "There is not any product" << std::endl;
         return;
     }
     system("cls");
     for (int i = 0; i < size; i++)
     {
-        std::cout << "Game " << i + 1 << std::endl;
+        std::cout << "Product " << i + 1 << std::endl;
         std::cout << products[i].name << std::endl;
         std::cout << products[i].price << std::endl;
         std::cout << products[i].mojody << std::endl;
@@ -232,13 +309,15 @@ void addToCart()
     {
         system("cls");
         std::cout << std::endl
-                  << "There is not any game" << std::endl;
+                  << "There is not any product in shop" << std::endl;
+        Sleep(1500);
+        sleepPrint("Back to menu");
         return;
     }
     system("cls");
     for (int i = 0; i < size; i++)
     {
-        std::cout << "Game " << i + 1 << std::endl;
+        std::cout << "Product " << i + 1 << std::endl;
         std::cout << products[i].name << std::endl;
         std::cout << products[i].price << std::endl;
         std::cout << products[i].mojody << std::endl;
@@ -254,6 +333,12 @@ void addToCart()
     {
         if (products[i].name == productToAdd && products[i].mojody != 0)
         {
+
+            // if(item.productName.find(products[i].name)){
+            //     std::cout<<"you already have this product in your cart";
+            //     Sleep(3000);
+            //     return;
+            // }
             item.productName = products[i].name;
             item.price = products[i].price;
             cartItems.push_back(item);
@@ -264,8 +349,25 @@ void addToCart()
                 sum += cartItems[j].price;
             }
             cart.totalPrice = sum;
-
-            return;
+            system("cls");
+            std::cout << "Added to your cart\n";
+            Sleep(1000);
+            std::cout << "1. Do you want to add more product to your cart? \n";
+            std::cout << "2. Back to menu \n";
+            char choice = getch();
+            while (choice != '1' && choice != '2')
+            {
+                std::cout << "chose base on the list\n";
+                choice = getch();
+            }
+            if (choice == '1')
+            {
+                addToCart();
+            }
+            else if (choice == '2')
+            {
+                return;
+            }
         }
         else if (products[i].name == productToAdd && products[i].mojody == 0)
         {
@@ -281,22 +383,33 @@ void addToCart()
 
 void seeCart()
 {
+    system("cls");
     if (cart.totalPrice == 0)
     {
         std::cout << "You do not have any product in your cart";
+        Sleep(1000);
+        sleepPrint("Back to menu");
         return;
     }
     std::cout << "The products in your cart:\n";
     for (int i = 0; i < cart.items.size(); i++)
     {
-        std::cout << i << "." << cart.items[i].productName << std::endl;
+        std::cout << i + 1 << "." << cart.items[i].productName << std::endl;
         std::cout << "    " << "price:" << cart.items[i].price << std::endl;
     }
+    std::cout << "press enter to go to menu";
+    char chert = getch();
+    while (chert != ' ')
+    {
+        chert = getch();
+    }
+
     return;
 }
 
 void checkout()
 {
+    system("cls");
     if (cart.totalPrice > *userWalletAdrress)
     {
         std::cout << "You do not have enohg money, pleas charge your wallet.";
@@ -321,12 +434,16 @@ void checkout()
 
         cart.items.clear();
         std::cout << "Finished... \n";
-        std::cout << "the post bring your baste to your home";
+        std::cout << "the post bring your baste to your home\n";
+        Sleep(2500);
+        sleepPrint("Back to menu");
+
         return;
     }
 }
 void menu()
 {
+    system("cls");
     int AUchoice;
     int menuChoice;
 
@@ -370,7 +487,7 @@ void menu()
 
             do
             {
-                std::cout << "\n------ menu------\n";
+                std::cout << "\n------ menu ------\n";
                 std::cout << "1. Add Product\n";
                 std::cout << "2. Delete Product\n";
                 std::cout << "3. Search Product\n";
@@ -388,7 +505,7 @@ void menu()
                     add();
                     break;
                 case 2:
-                    deleteGame();
+                    deleteProduct();
                     break;
                 case 3:
                     search();
@@ -425,9 +542,11 @@ void menu()
     }
     else if (AUchoice == 2)
     {
+        system("cls");
+
         do
         {
-            std::cout << "\n------ menu------\n";
+            std::cout << "\n------ menu ------\n";
             std::cout << "1. Search Product\n";
             std::cout << "2. wallet charge \n";
             std::cout << "3. Wallet mojody\n";

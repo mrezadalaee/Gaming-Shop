@@ -248,6 +248,25 @@ void search()
             std::cout << "Name: " << products[i].name << std::endl;
             std::cout << "Price: " << products[i].price << std::endl;
             std::cout << "Mojody: " << products[i].mojody << std::endl;
+            std::cout << "\n1. Search more\n";
+            std::cout << "2. Back to menu\n";
+            char choice = getch();
+            while (choice != '1' && choice != '2')
+            {
+                choice = getch();
+            }
+            if (choice == '1')
+            {
+                search();
+            }
+            else if (choice == '2')
+            {
+                sleepPrint("Back to menu");
+                return;
+            }
+            Sleep(1500);
+            sleepPrint("Back to menu");
+            return;
             break;
         }
     }
@@ -407,7 +426,7 @@ void addToCart()
     }
 
     system("cls");
-    std::cout<<"Not found\n";
+    std::cout << "Not found\n";
     std::cout << "1. Do you want to try again? \n";
     std::cout << "2. Back to menu \n";
     char choice = getch();
@@ -488,7 +507,7 @@ void checkout()
             {
                 if (products[i].name == cart.items[i].productName)
                 {
-                    products[i].mojody -=1;
+                    products[i].mojody -= 1;
                 }
             }
         }
